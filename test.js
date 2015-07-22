@@ -54,3 +54,18 @@ test('ObservableNotifyObserversTest', function(assert) {
 
 	assert.end();
 })
+
+test('testShouldPassArguments', function(assert) {
+	var observable = new Observable();
+	var actual;
+
+	observable.addObserver(function() {
+		actual = arguments;
+	});
+
+	observable.notifyObservers('String', 1, 32);
+
+	assert.deepEqual(['String', 1,32], actual);
+
+	assert.end();
+})
