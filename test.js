@@ -25,3 +25,16 @@ test('test should return false when no observers', function(assert) {
 	assert.notOk(observable.hasObserver(function(){}))
 	assert.end();
 })
+
+test('test should store functions', function(assert) {
+	var observable = new Observable();
+	var observers = [function(){}, function(){}];
+
+	observable.addObserver(observers[0]);
+	observable.addObserver(observers[1]);
+
+	assert.ok(observable.hasObserver(observers[0]));
+	assert.ok(observable.hasObserver(observers[1]));
+
+	assert.end();
+})
