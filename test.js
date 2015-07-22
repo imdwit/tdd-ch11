@@ -38,3 +38,19 @@ test('test should store functions', function(assert) {
 
 	assert.end();
 })
+
+test('ObservableNotifyObserversTest', function(assert) {
+	//test should call all observers
+	var observable = new Observable();
+	var ob1 = function(){ob1.called = true};
+	var ob2 = function(){ob2.called = true};
+
+	observable.addObserver(ob1);
+	observable.addObserver(ob2);
+	observable.notifyObservers();
+
+	assert.ok(ob1.called);
+	assert.ok(ob2.called);
+
+	assert.end();
+})
