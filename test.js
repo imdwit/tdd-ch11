@@ -6,5 +6,6 @@ test('ObservableAddObserverTest', function(assert) {
 
 	observable.addObserver(observer);
 
-	assert.deepEqual(observer, observable.observers[0]);
-})
+	assert.equal(observer, observable.observers[0]);
+	assert.end();
+});

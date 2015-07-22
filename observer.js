@@ -1,9 +1,9 @@
-var Observable = function() {
+function Observable() {
 	this.observers = [];
 }
 
-Observable.prototype.addObserver = function() {
-
+Observable.prototype.addObserver = function(observer) {
+	this.observers.push(observer);
 }
 
 module.exports = Observable;
