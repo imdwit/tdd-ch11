@@ -18,3 +18,10 @@ test('ObservableHasObserverTest', function(assert) {
 	assert.ok(observable.hasObserver(observer));
 	assert.end();
 })
+
+
+test('test should return false when no observers', function(assert) {
+	var observable = new Observable();
+	assert.notOk(observable.hasObserver(function(){}))
+	assert.end();
+})

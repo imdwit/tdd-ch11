@@ -7,7 +7,7 @@ Observable.prototype.addObserver = function(observer) {
 }
 
 Observable.prototype.hasObserver = function(observer) {
-	return true;
+	return this.observers.indexOf(observer) >= 0;
 }
 
 module.exports = Observable;
