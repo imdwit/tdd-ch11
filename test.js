@@ -80,3 +80,18 @@ test('should throw for uncallable observer', function(assert) {
 
 	assert.end();
 })
+
+
+test('should notify all even when some fail', function(assert) {
+	var observable = new Observable();
+	var o1 = function() {throw new Error('oops')};
+	var o2 = function() {o2.called = true};
+
+	observable.addObserver(o1);
+	observable.addObserver(o2);
+	observable.notifyObservers();
+
+	assert.ok(o2.called);
+
+	assert.end();
+})

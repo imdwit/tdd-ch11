@@ -16,7 +16,12 @@ Observable.prototype.hasObserver = function(observer) {
 Observable.prototype.notifyObservers = function() {
 	var args = arguments;
 	this.observers.forEach(function(o) {
-		o.apply(this, args);
+		try {
+			o.apply(this, args);
+		}
+		catch(e) {
+			
+		}
 	})
 }
 
