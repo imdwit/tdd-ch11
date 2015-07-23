@@ -1,8 +1,5 @@
-function Observable() {
 
-}
-
-Observable.prototype.addObserver = function(observer) {
+var addObserver = function(observer) {
 	if(typeof observer !== 'function') {
 		throw new TypeError('observer is not a function');
 	}
@@ -10,12 +7,12 @@ Observable.prototype.addObserver = function(observer) {
 	this.observers.push(observer);
 }
 
-Observable.prototype.hasObserver = function(observer) {
+var hasObserver = function(observer) {
 	this.observers = this.observers || [];
 	return this.observers.indexOf(observer) >= 0;
 }
 
-Observable.prototype.notifyObservers = function() {
+var notifyObservers = function() {
 	var args = arguments;
 	this.observers = this.observers || [];
 	this.observers.forEach(function(o) {
@@ -28,4 +25,8 @@ Observable.prototype.notifyObservers = function() {
 	})
 }
 
-module.exports = Observable;
+module.exports = {
+	addObserver: addObserver,
+	hasObserver: hasObserver,
+	notifyObservers: notifyObservers
+};

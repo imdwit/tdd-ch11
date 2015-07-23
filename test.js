@@ -1,7 +1,7 @@
 var test = require('tape');
 var Observable = require('./observer.js');
 test('ObservableAddObserverTest', function(assert) {
-	var observable = new Observable();
+	var observable =  Object.create(Observable);
 	var observer = function() {};
 	var observers = [function(){}, function(){}];
 
