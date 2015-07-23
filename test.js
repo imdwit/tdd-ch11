@@ -1,7 +1,7 @@
 var test = require('tape');
 var Observable = require('./observer.js');
 test('ObservableAddObserverTest', function(assert) {
-	var observable =  Object.create(Observable);
+	var observable = Object.create(Observable);
 	var observer = function() {};
 	var observers = [function(){}, function(){}];
 
@@ -16,7 +16,7 @@ test('ObservableAddObserverTest', function(assert) {
 
 
 test('ObservableHasObserverTest', function(assert) {
-	var observable = new Observable();
+	var observable = Object.create(Observable);
 	var observer = function(){};
 	assert.notOk(observable.hasObserver(observer));
 	assert.end();
@@ -24,7 +24,7 @@ test('ObservableHasObserverTest', function(assert) {
 
 
 test('test should return false when no observers', function(assert) {
-	var observable = new Observable();
+	var observable = Object.create(Observable);
 	assert.doesNotThrow(function() {
 		observable.notifyObservers();
 	})
@@ -32,7 +32,7 @@ test('test should return false when no observers', function(assert) {
 })
 
 test('test should store functions', function(assert) {
-	var observable = new Observable();
+	var observable = Object.create(Observable);
 	var observers = [function(){}, function(){}];
 
 	observable.addObserver(observers[0]);
@@ -46,7 +46,7 @@ test('test should store functions', function(assert) {
 
 test('ObservableNotifyObserversTest', function(assert) {
 	//test should call all observers
-	var observable = new Observable();
+	var observable = Object.create(Observable);
 	var ob1 = function(){ob1.called = true};
 	var ob2 = function(){ob2.called = true};
 
@@ -61,7 +61,7 @@ test('ObservableNotifyObserversTest', function(assert) {
 })
 
 test('testShouldPassArguments', function(assert) {
-	var observable = new Observable();
+	var observable = Object.create(Observable);
 	var actual;
 
 	observable.addObserver(function() {
@@ -77,7 +77,7 @@ test('testShouldPassArguments', function(assert) {
 
 
 test('should throw for uncallable observer', function(assert) {
-	var observable = new Observable();
+	var observable = Object.create(Observable);
 
 	assert.throws(function() {
 		observable.addObserver({});
@@ -88,7 +88,7 @@ test('should throw for uncallable observer', function(assert) {
 
 
 test('should notify all even when some fail', function(assert) {
-	var observable = new Observable();
+	var observable = Object.create(Observable);
 	var o1 = function() {throw new Error('oops')};
 	var o2 = function() {o2.called = true};
 
@@ -102,7 +102,7 @@ test('should notify all even when some fail', function(assert) {
 })
 
 test('should call observers in the order they were added', function(assert) {
-	var observable = new Observable();
+	var observable = Object.create(Observable);
 	var calls = [];
 	var ob1 = function() {calls.push(ob1)};
 	var ob2 = function() {calls.push(ob2)};
