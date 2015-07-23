@@ -6,11 +6,11 @@ test('ObservableAddObserverTest', function(assert) {
 	var observers = [function(){}, function(){}];
 
 
-	observable.addObserver(observers[0]);
-	observable.addObserver(observers[1]);
+	observable.addObserver('event', observers[0]);
+	observable.addObserver('event', observers[1]);
 
-	assert.ok(observable.hasObserver(observers[0]));
-	assert.ok(observable.hasObserver(observers[1]));
+	assert.ok(observable.hasObserver('event', observers[0]));
+	assert.ok(observable.hasObserver('event', observers[1]));
 	assert.end();
 });
 
@@ -18,7 +18,7 @@ test('ObservableAddObserverTest', function(assert) {
 test('ObservableHasObserverTest', function(assert) {
 	var observable = Object.create(Observable);
 	var observer = function(){};
-	assert.notOk(observable.hasObserver(observer));
+	assert.notOk(observable.hasObserver('event', observer));
 	assert.end();
 })
 
@@ -35,11 +35,11 @@ test('test should store functions', function(assert) {
 	var observable = Object.create(Observable);
 	var observers = [function(){}, function(){}];
 
-	observable.addObserver(observers[0]);
-	observable.addObserver(observers[1]);
+	observable.addObserver('event', observers[0]);
+	observable.addObserver('event', observers[1]);
 
-	assert.ok(observable.hasObserver(observers[0]));
-	assert.ok(observable.hasObserver(observers[1]));
+	assert.ok(observable.hasObserver('event', observers[0]));
+	assert.ok(observable.hasObserver('event', observers[1]));
 
 	assert.end();
 })
@@ -50,9 +50,9 @@ test('ObservableNotifyObserversTest', function(assert) {
 	var ob1 = function(){ob1.called = true};
 	var ob2 = function(){ob2.called = true};
 
-	observable.addObserver(ob1);
-	observable.addObserver(ob2);
-	observable.notifyObservers();
+	observable.addObserver('event', ob1);
+	observable.addObserver('event', ob2);
+	observable.notifyObservers('event');
 
 	assert.ok(ob1.called);
 	assert.ok(ob2.called);
@@ -64,11 +64,11 @@ test('testShouldPassArguments', function(assert) {
 	var observable = Object.create(Observable);
 	var actual;
 
-	observable.addObserver(function() {
+	observable.addObserver('event', function() {
 		actual = arguments;
 	});
 
-	observable.notifyObservers('String', 1, 32);
+	observable.notifyObservers('event', 'String', 1, 32);
 
 	assert.deepEqual(['String', 1,32], actual);
 
@@ -92,9 +92,9 @@ test('should notify all even when some fail', function(assert) {
 	var o1 = function() {throw new Error('oops')};
 	var o2 = function() {o2.called = true};
 
-	observable.addObserver(o1);
-	observable.addObserver(o2);
-	observable.notifyObservers();
+	observable.addObserver('event', o1);
+	observable.addObserver('event', o2);
+	observable.notifyObservers('event');
 
 	assert.ok(o2.called);
 
@@ -107,12 +107,32 @@ test('should call observers in the order they were added', function(assert) {
 	var ob1 = function() {calls.push(ob1)};
 	var ob2 = function() {calls.push(ob2)};
 
-	observable.addObserver(ob1);
-	observable.addObserver(ob2);
+	observable.addObserver('event', ob1);
+	observable.addObserver('event', ob2);
 
-	observable.notifyObservers();
+	observable.notifyObservers('event');
 
 	assert.deepEqual(ob1, calls[0]);
 	assert.deepEqual(ob2, calls[1]);
+	assert.end();
+})
+
+
+test('should notify relevant observers only', function(assert) {
+	var observable = Object.create(Observable);
+	var calls = [];
+
+	observable.addObserver('event', function() {
+		calls.push('event');
+	})
+
+	observable.addObserver('other', function() {
+		calls.push('other');
+	})
+
+	observable.notifyObservers('other');
+
+	assert.deepEqual(['other'], calls);
+
 	assert.end();
 })
