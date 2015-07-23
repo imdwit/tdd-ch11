@@ -95,3 +95,19 @@ test('should notify all even when some fail', function(assert) {
 
 	assert.end();
 })
+
+test('should call observers in the order they were added', function(assert) {
+	var observable = new Observable();
+	var calls = [];
+	var ob1 = function() {calls.push(ob1)};
+	var ob2 = function() {calls.push(ob2)};
+
+	observable.addObserver(ob1);
+	observable.addObserver(ob2);
+
+	observable.notifyObservers();
+
+	assert.deepEqual(ob1, calls[0]);
+	assert.deepEqual(ob2, calls[1]);
+	assert.end();
+})
