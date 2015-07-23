@@ -3,6 +3,9 @@ function Observable() {
 }
 
 Observable.prototype.addObserver = function(observer) {
+	if(typeof observer !== 'function') {
+		throw new TypeError('observer is not a function');
+	}
 	this.observers.push(observer);
 }
 

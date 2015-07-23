@@ -69,3 +69,14 @@ test('testShouldPassArguments', function(assert) {
 
 	assert.end();
 })
+
+
+test('should throw for uncallable observer', function(assert) {
+	var observable = new Observable();
+
+	assert.throws(function() {
+		observable.addObserver({});
+	}, 'TypeError');
+
+	assert.end();
+})
